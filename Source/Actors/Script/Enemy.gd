@@ -11,3 +11,6 @@ func _physics_process(delta: float) -> void:
 	if is_on_wall():
 		_velocity.x *= -1.0 
 
+#Cette fonction est appelée lorsque l'ennemi est touché par l'attaque du joueur
+func hit():
+	queue_free() #Pour le moment, l'ennemi sera détruit
