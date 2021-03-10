@@ -10,7 +10,7 @@ export var sensibility: = 10 #facteur de sensibilité de changement de la gravit
 var origin: = position
 #booléen pour indiquer si le jouer est en train de modifier le champ
 var is_dragging: = false 
-var is_in_zone: = true #indique si la souris est dans la zone
+var is_in_zone: = false #indique si la souris est dans la zone
 
 
 # Called when the node enters the scene tree for the first time.
