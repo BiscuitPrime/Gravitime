@@ -34,7 +34,6 @@ scale = Vector2( 0.977099, 1.01788 )
 texture = ExtResource( 3 )
 
 [node name="Laser" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
 position = Vector2( -2.38419e-06, -476 )
 scale = Vector2( 0.977099, 1.01788 )
 texture = ExtResource( 1 )

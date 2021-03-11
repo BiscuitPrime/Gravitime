@@ -9,7 +9,8 @@ extents = Vector2( 64, 64 )
 "Pushables",
 ]]
 collision_layer = 8
-collision_mask = 31
+collision_mask = 4
+gravity_scale = 4.96
 
 [node name="RTS_Crate" type="Sprite" parent="."]
 scale = Vector2( 0.25, 0.25 )
