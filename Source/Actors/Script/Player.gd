@@ -59,8 +59,6 @@ func calculate_move_velocity(
 func _on_PhysicalHitbox_body_entered(body: Node) -> void:
 	if body is Enemy: #Si le corps étranger est un enemy, on appelle la fonction "hit" du joueur
 		hit(1)
-	if body is Laser: #FIXME: supposé appeler la fonction "hit" du joueur
-		hit(1)
 	pass 
 
 #Fonction appelée lorsque le joueur prends un dégât

@@ -12,5 +12,5 @@ func _physics_process(delta: float) -> void:
 		_velocity.x *= -1.0 
 
 #Cette fonction est appelée lorsque l'ennemi est touché par l'attaque du joueur
-func hit():
-	queue_free() #Pour le moment, l'ennemi sera détruit
+func hit(dmg):
+	queue_free() #Pour le moment, l'ennemi sera détruit - plus tard, on mettra un système de vie

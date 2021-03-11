@@ -24,7 +24,7 @@ tracks/0/keys = {
 }
 
 [node name="Laser" type="Area2D"]
-collision_layer = 10
+collision_layer = 8
 collision_mask = 3
 script = ExtResource( 2 )
 
@@ -34,7 +34,6 @@ scale = Vector2( 0.977099, 1.01788 )
 texture = ExtResource( 3 )
 
 [node name="Laser" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
 position = Vector2( -2.38419e-06, -476 )
 scale = Vector2( 0.977099, 1.01788 )
 texture = ExtResource( 1 )
@@ -45,3 +44,4 @@ shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/shutdown = SubResource( 2 )
+[connection signal="body_entered" from="." to="." method="_on_Laser_body_entered"]
