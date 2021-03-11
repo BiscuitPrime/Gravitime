@@ -25,6 +25,11 @@ _global_script_classes=[ {
 "path": "res://Source/Gravity/Script/GravityField.gd"
 }, {
 "base": "Area2D",
+"class": "Laser",
+"language": "GDScript",
+"path": "res://Source/Entities/Script/Laser.gd"
+}, {
+"base": "Area2D",
 "class": "Level_End",
 "language": "GDScript",
 "path": "res://Source/Entities/Script/Level_End.gd"
@@ -38,6 +43,7 @@ _global_script_class_icons={
 "Actor": "",
 "Enemy": "",
 "GravityField": "",
+"Laser": "",
 "Level_End": "",
 "Player": ""
 }
