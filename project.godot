@@ -38,6 +38,11 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://Source/Actors/Script/Player.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "TimeClone",
+"language": "GDScript",
+"path": "res://Source/Actors/Script/TimeClone.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
@@ -45,7 +50,8 @@ _global_script_class_icons={
 "GravityField": "",
 "Laser": "",
 "Level_End": "",
-"Player": ""
+"Player": "",
+"TimeClone": ""
 }
 
 [application]
