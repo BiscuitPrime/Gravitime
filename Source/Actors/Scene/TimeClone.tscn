@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Resources/Art/start-assets/player.png" type="Texture" id=1]
+[ext_resource path="res://Source/Actors/Script/TimeClone.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 40, 48 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 47.366, 48.3008 )
+
+[node name="TimeClone" type="KinematicBody2D"]
+collision_mask = 2147483662
+script = ExtResource( 2 )
+
+[node name="TimeClone" type="Sprite" parent="."]
+modulate = Color( 0.831373, 0.611765, 0.890196, 1 )
+self_modulate = Color( 0.815686, 0.647059, 0.909804, 1 )
+position = Vector2( 0, -48 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -48 )
+shape = SubResource( 1 )
+
+[node name="PhysicalHitbox" type="Area2D" parent="."]
+
+[node name="PhysicalBox" type="CollisionShape2D" parent="PhysicalHitbox"]
+position = Vector2( -0.374573, -47.1967 )
+shape = SubResource( 2 )
+[connection signal="body_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_body_entered"]
