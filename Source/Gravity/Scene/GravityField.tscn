@@ -8,8 +8,10 @@ extents = Vector2( 98, 75 )
 
 [node name="GravityField" type="Area2D"]
 position = Vector2( 502, 292 )
+space_override = 3
+gravity = 1.0
 collision_layer = 16
-collision_mask = 0
+collision_mask = 11
 script = ExtResource( 2 )
 norm_max = 6500
 sensibility = 20

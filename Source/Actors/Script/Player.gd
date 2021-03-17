@@ -23,6 +23,8 @@ func _physics_process(delta: float) -> void:
 	skills() #Cette fonction va tester si le joueur fait une action ou non
 	var is_jump_interrupted: = Input.is_action_just_released("jump") and _velocity.y < 0.0
 	var direction: = get_direction()
+	if is_in_gravity_field:
+		apply_gravity(gravity_area)
 	_velocity = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
 	facing=_velocity.x<0
 	_velocity = move_and_slide(_velocity, FLOOR_NORMAL, false,
@@ -48,7 +50,7 @@ func calculate_move_velocity(
 	) -> Vector2:
 	var out: = linear_velocity
 	out.x = speed.x * direction.x
-	out.y += gravity * get_physics_process_delta_time()
+	out += gravity * get_physics_process_delta_time()
 	if direction.y == -1.0:
 		out.y = speed.y * direction.y
 	if is_jump_interrupted:
@@ -59,8 +61,8 @@ func calculate_move_velocity(
 func _on_PhysicalHitbox_body_entered(body: Node) -> void:
 	if body is Enemy: #Si le corps étranger est un enemy, on appelle la fonction "hit" du joueur
 		hit(1)
-	pass 
-
+	pass
+		
 #Fonction appelée lorsque le joueur prends un dégât
 func hit(dmg):
 	var life = GeneralData.player_hp #On créer une variable locale pour simplifier code
@@ -95,3 +97,15 @@ func attack():
 	yield($ReloadTimer, "timeout")
 	is_attacking=false
 	pass
+
+#Cette fonction est appelée quand le joueur rentre dans une zone
+func _on_PhysicalHitbox_area_entered(area: Area2D) -> void:
+	if area is GravityField: #Si le corps est un champ de gravité, on appliquera la gravité de ce champ
+		is_in_gravity_field = true
+		gravity_area = area
+	
+#Cette fonction est appelé quand le joueur quitte une zone 
+func _on_PhysicalHitbox_area_exited(area: Area2D) -> void:
+	if area is GravityField: #Si le corps est un champ de gravité, on appliquera plus la gravité de ce champ
+		gravity = default_gravity
+		is_in_gravity_field = false
