@@ -2,7 +2,7 @@ class_name GravityField
 extends Area2D
 
 #déclaration des champs de la zone.
-var gravity_field: = Vector2(3200, 0) # Vecteur champ de gravité
+var gravity_field: = Vector2(0, 3200) # Vecteur champ de gravité utilisé par les actors
 export var norm_max: = 6000
 export var norm_min: = 300
 export var sensibility: = 10 #facteur de sensibilité de changement de la gravité
@@ -18,8 +18,8 @@ var is_in_zone: = false #indique si la souris est dans la zone
 	#pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	print("norme: ", gravity_field.length())
+#func _process(delta: float) -> void:
+	#print("gravity: ", gravity_field)
 
 
 #Appelée dès qu'un événement se produit 
@@ -59,6 +59,7 @@ func calculate_gravity(origin: Vector2, end: Vector2) -> Vector2:
 	var grav : = sensibility * (end - origin)
 	grav = grav.clamped(norm_max) #on limite la norme max de la gravité.
 	grav = max(grav.length(), norm_min) * grav.normalized() #on limite la norme min également
+	gravity_vec = grav #cette ligne sert pour les rigid body 2D qui font appel au moteur physique de godot
 	return grav
 
 #quand la souris rentre dans la zone

@@ -14,6 +14,12 @@ func _ready():
 
 #Cette fonction est appelée à chaque frame du jeu 
 func _physics_process(delta: float) -> void:
+	if is_in_gravity_field:
+		apply_gravity(gravity_area)
+	_velocity += gravity * delta
+	_velocity.y = move_and_slide(_velocity, FLOOR_NORMAL).y
+	if is_on_wall():
+		_velocity.x *= -1.0 
 	_velocity.y += gravity * delta
 	_velocity = move_and_slide(calculate_new_velocity(_velocity), FLOOR_NORMAL)
 
@@ -30,3 +36,14 @@ func calculate_new_velocity(_velocity):
 #Cette fonction est appelée lorsque l'ennemi est touché par l'attaque du joueur
 func hit(dmg):
 	queue_free() #Pour le moment, l'ennemi sera détruit - plus tard, on mettra un système de vie
+
+
+func _on_PhysicalHitbox_area_entered(area: Area2D) -> void:
+	if area is GravityField: #Si le corps est un champ de gravité, on appliquera la gravité de ce champ
+		is_in_gravity_field = true
+		gravity_area = area
+
+func _on_PhysicalHitbox_area_exited(area: Area2D) -> void:
+	if area is GravityField: #Si le corps est un champ de gravité, on appliquera plus la gravité de ce champ
+		gravity = default_gravity
+		is_in_gravity_field = false
