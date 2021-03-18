@@ -11,7 +11,7 @@ extents = Vector2( 40, 48 )
 extents = Vector2( 47.366, 48.3008 )
 
 [node name="Player" type="KinematicBody2D"]
-collision_mask = 2147483662
+collision_mask = 2147483678
 script = ExtResource( 2 )
 Melee = ExtResource( 3 )
 
@@ -35,5 +35,8 @@ current = true
 [node name="ReloadTimer" type="Timer" parent="."]
 wait_time = 0.8
 one_shot = true
+
+[connection signal="area_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_entered"]
+[connection signal="area_exited" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_exited"]
 [connection signal="body_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_body_entered"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
