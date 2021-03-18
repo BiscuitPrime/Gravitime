@@ -32,3 +32,29 @@ position = Vector2( -1.00586, -38.2231 )
 shape = SubResource( 2 )
 [connection signal="area_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_entered"]
 [connection signal="area_exited" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_exited"]
+
+[node name="DetectorPlatformLeft" type="RayCast2D" parent="."]
+position = Vector2( -50, -30 )
+scale = Vector2( 1, 3 )
+enabled = true
+collision_mask = 4
+
+[node name="DetectorPlatformRight" type="RayCast2D" parent="."]
+position = Vector2( 50, -30 )
+scale = Vector2( 1, 3 )
+enabled = true
+collision_mask = 4
+
+[node name="DetectorRight" type="RayCast2D" parent="."]
+position = Vector2( 50, -33 )
+rotation = -1.5708
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 12
+
+[node name="DetectorLeft" type="RayCast2D" parent="."]
+position = Vector2( -50, -33 )
+rotation = 1.5708
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 12
