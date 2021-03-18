@@ -9,11 +9,11 @@ func _ready():
 	anim_player.play_backwards("shutdown")
 	collision_layer=4
 
-func _on_DoorButton_body_entered(body: Node) -> void:
+func _on_Button_body_entered(body: Node) -> void:
 	anim_player.play("shutdown")
 	collision_layer=0
 	
-func _on_DoorButton_body_exited(body: Node) -> void:
+func _on_Button_body_exited(body: Node) -> void:
 	anim_player.play_backwards("shutdown")
 	collision_layer=4
 

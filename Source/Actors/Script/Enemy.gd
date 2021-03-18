@@ -8,25 +8,38 @@ onready var DetectorLeft = $DetectorLeft #Détecte ce qui est en face de lui (en
 onready var DetectorPlatRight = $DetectorPlatformRight #Détecte ce qui est sous lui (plateformes)
 onready var DetectorPlatLeft = $DetectorPlatformLeft #Détecte ce qui est sous lui (plateformes)
 
+var timeposition #variable qui va contenir la position de l'ennemi avant la manipulation temporelle
+
 #Cette fonction est appelée lorsque l'instance de l'ennemi est loadée
 func _ready():
+	add_to_group("timecontrol") #On l'ajoute au groupe timecontrol, ce qui indique que le temps va l'affecter
 	_velocity.x = -speed.x #On donne une vitesse initiale à l'ennemi
 
 #Cette fonction est appelée à chaque frame du jeu 
 func _physics_process(delta: float) -> void:
-	_velocity.y += gravity * delta
+	_velocity.y += gravity * delta #On calcule l'effet de la gravité
 	_velocity = move_and_slide(calculate_new_velocity(_velocity), FLOOR_NORMAL)
 
-#This function is used to calculate the new velocity of the enemy
+#Cette fonction calcule la vélocité de l'ennemi
 func calculate_new_velocity(_velocity):
 	if not DetectorPlatRight.is_colliding() : #Si le détecteur ne détecte pas de plateforme sous l'ennemi, il rebrousse chemin
 		_velocity.x=-speed.x
 	elif not DetectorPlatLeft.is_colliding():
 		_velocity.x=speed.x
-	elif DetectorLeft.is_colliding() or DetectorRight.is_colliding():
+	elif DetectorLeft.is_colliding() or DetectorRight.is_colliding(): #Si l'ennemi détecte un mur, il rebrousse chemin
 		_velocity.x *= -1.0
 	return _velocity
 
 #Cette fonction est appelée lorsque l'ennemi est touché par l'attaque du joueur
 func hit(dmg):
 	queue_free() #Pour le moment, l'ennemi sera détruit - plus tard, on mettra un système de vie
+
+#Fonction appelée par TimeControl qui permet de sauvegarder la position du joueur :
+func save():
+	timeposition=position
+	pass
+
+#Fonction appelée par TimeControl qui permet de remettre l'ennemi à sa position d'avant le timeReset
+func timeReset():
+	position=timeposition
+	pass

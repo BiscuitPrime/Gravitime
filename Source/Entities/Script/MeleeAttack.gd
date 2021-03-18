@@ -10,7 +10,7 @@ func _ready():
 #Cette fonction est appellée lorsqu'un corps étranger rentre dans l'attaque
 func _on_body_entered(body: Node) -> void:
 	if body is Enemy:
-		body.hit()
+		body.hit(1)
 	queue_free()
 	pass # Replace with function body.
 
