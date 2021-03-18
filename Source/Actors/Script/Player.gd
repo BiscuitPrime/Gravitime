@@ -10,12 +10,16 @@ export (int, 0, 200) var push = 100 #Impulsion qui permet de déplacer les Rigid
 var spawn_position : Vector2 #Cette variable va stocker la position du spawn du joueur 
 var is_attacking=false #Indique si le joueur attaque ou non
 var facing = true #cette variable va indiquer dans quel sens le joueur se tient : true si x>0, false sinon
+var timecontrol_active = false #cette variable indique si le joueur est e train de manipuler le temps ou non
+var timeposition #variable qui contiendra la position du joueur lorsqu'il remontera le temps
+
 
 #Cette fonction est appelée lors de l'instanciation du joueur
 func _ready():
 	#On initialise la var spawn_position du joueur sur sa position une fois initialisé 
 	#position donnée lors du placement de l'instance joueur lors de la création du niveau
 	spawn_position=position 
+	add_to_group("timecontrol") #On l'ajoute au groupe timecontrol, ce qui indique que le temps va l'affecter
 	pass
 
 #Cette fonction est appelée à chaque frame du jeu
@@ -61,8 +65,8 @@ func calculate_move_velocity(
 func _on_PhysicalHitbox_body_entered(body: Node) -> void:
 	if body is Enemy: #Si le corps étranger est un enemy, on appelle la fonction "hit" du joueur
 		hit(1)
-	pass
-		
+  pass
+
 #Fonction appelée lorsque le joueur prends un dégât
 func hit(dmg):
 	var life = GeneralData.player_hp #On créer une variable locale pour simplifier code
@@ -80,9 +84,12 @@ func die():
 
 #Fonction appelée à chaque frame et indiquant si le joueur utilise un skill ou non
 func skills():
-	if Input.is_action_just_pressed("attack") and is_attacking==false:
-		attack() #Un des skills est d'attaquer
+	if Input.is_action_just_pressed("attack") and is_attacking==false: #Si le joueur appuie sur attaque (et il n'est pas déjà en train d'attaquer)
+		attack() #Un des skills est d'attaquer, on appelle 
 		is_attacking=true
+	if Input.is_action_just_pressed("time") and timecontrol_active==false:
+		TimeControl.timereset() #On demande à TimeControl de lancer la fonction de reset temporel
+		timecontrol_active=true #On indique que l'on remonte le temps
 	pass
 
 #Fonction appelée lorsque le joueur attaque
@@ -96,6 +103,18 @@ func attack():
 	$ReloadTimer.start()
 	yield($ReloadTimer, "timeout")
 	is_attacking=false
+	pass
+
+
+#Fonction appelée par TimeControl qui permet de sauvegarder la position du joueur :
+func save():
+	timeposition=position
+	pass
+
+#Fonction appelée par TimeControl qui permet de remettre le joueur à sa position d'avant le timeReset
+func timeReset():
+	position=timeposition
+	timecontrol_active=false #On indique que on ne controle plus le temps (on peut recommencer à le modifier)
 	pass
 
 #Cette fonction est appelée quand le joueur rentre dans une zone

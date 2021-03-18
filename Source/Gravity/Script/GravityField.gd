@@ -18,9 +18,9 @@ var is_in_zone: = false #indique si la souris est dans la zone
 	#pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+#Pour le moment, elle ne sert que pour des tests (d'où le fait qu'elle soit en commentaire)
 #func _process(delta: float) -> void:
 	#print("gravity: ", gravity_field)
-
 
 #Appelée dès qu'un événement se produit 
 #Cette fonction est chargée de détecter les modifications
