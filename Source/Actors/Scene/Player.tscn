@@ -35,7 +35,6 @@ current = true
 [node name="ReloadTimer" type="Timer" parent="."]
 wait_time = 0.8
 one_shot = true
-
 [connection signal="area_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_entered"]
 [connection signal="area_exited" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_exited"]
 [connection signal="body_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_body_entered"]

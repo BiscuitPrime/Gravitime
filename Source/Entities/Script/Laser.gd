@@ -12,6 +12,7 @@ func _ready():
 func _on_Button_body_entered(body: Node) -> void:
 	anim_player.play("shutdown")
 	collision_layer=0
+	collision_mask=0
 	
 func _on_Button_body_exited(body: Node) -> void:
 	anim_player.play_backwards("shutdown")

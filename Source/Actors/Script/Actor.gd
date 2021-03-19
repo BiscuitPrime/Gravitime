@@ -4,6 +4,7 @@ class_name Actor
 #constante indiquant la direction du sol 
 const FLOOR_NORMAL: = Vector2.UP
 
+#Constante contenant la vitesse limite des acteurs (ennemis, clone temporel, player)
 export var speed: = Vector2(800.0, 1600.0)
 
 #ici toutes les varaiables en rapport avec la gravité.

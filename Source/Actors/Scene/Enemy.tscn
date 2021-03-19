@@ -30,8 +30,6 @@ shape = SubResource( 1 )
 modulate = Color( 0.0588235, 0.00784314, 1, 1 )
 position = Vector2( -1.00586, -38.2231 )
 shape = SubResource( 2 )
-[connection signal="area_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_entered"]
-[connection signal="area_exited" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_exited"]
 
 [node name="DetectorPlatformLeft" type="RayCast2D" parent="."]
 position = Vector2( -50, -30 )
@@ -58,3 +56,5 @@ rotation = 1.5708
 enabled = true
 cast_to = Vector2( 0, 15 )
 collision_mask = 12
+[connection signal="area_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_entered"]
+[connection signal="area_exited" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_exited"]

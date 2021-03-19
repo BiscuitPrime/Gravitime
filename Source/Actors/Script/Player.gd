@@ -31,8 +31,7 @@ func _physics_process(delta: float) -> void:
 		apply_gravity(gravity_area)
 	_velocity = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
 	facing=_velocity.x<0
-	_velocity = move_and_slide(_velocity, FLOOR_NORMAL, false,
-					4, PI/4, false)
+	_velocity = move_and_slide(_velocity, FLOOR_NORMAL, false, 4, PI/4, false)
 	for index in get_slide_count():
 		var collision = get_slide_collision(index)
 		if collision.collider.is_in_group("Pushables"):
@@ -65,7 +64,7 @@ func calculate_move_velocity(
 func _on_PhysicalHitbox_body_entered(body: Node) -> void:
 	if body is Enemy: #Si le corps étranger est un enemy, on appelle la fonction "hit" du joueur
 		hit(1)
-  pass
+	pass
 
 #Fonction appelée lorsque le joueur prends un dégât
 func hit(dmg):
@@ -105,7 +104,6 @@ func attack():
 	is_attacking=false
 	pass
 
-
 #Fonction appelée par TimeControl qui permet de sauvegarder la position du joueur :
 func save():
 	timeposition=position
@@ -122,7 +120,7 @@ func _on_PhysicalHitbox_area_entered(area: Area2D) -> void:
 	if area is GravityField: #Si le corps est un champ de gravité, on appliquera la gravité de ce champ
 		is_in_gravity_field = true
 		gravity_area = area
-	
+
 #Cette fonction est appelé quand le joueur quitte une zone 
 func _on_PhysicalHitbox_area_exited(area: Area2D) -> void:
 	if area is GravityField: #Si le corps est un champ de gravité, on appliquera plus la gravité de ce champ
