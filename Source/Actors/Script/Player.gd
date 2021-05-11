@@ -3,6 +3,7 @@ extends Actor
 #Ce script est utilisé par le joueur
 
 export (PackedScene) var Melee #Contient la scène de l'attaque qui sera utilisée
+export (PackedScene) var Clone #Contient le clone temporel qui sera utilisé
 
 export (int, 0, 200) var push = 100 #Impulsion qui permet de déplacer les RigidBody2D
 
@@ -30,16 +31,25 @@ func _physics_process(delta: float) -> void:
 	if is_in_gravity_field:
 		apply_gravity(gravity_area)
 	_velocity = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
-	facing=_velocity.x<0
-	_velocity = move_and_slide(_velocity, FLOOR_NORMAL, false,
-					4, PI/4, false)
+
+	_velocity = move_and_slide(_velocity, FLOOR_NORMAL, false, 4, PI/4, false)
 	for index in get_slide_count():
 		var collision = get_slide_collision(index)
 		if collision.collider.is_in_group("Pushables"):
 				collision.collider.apply_central_impulse(-collision.normal * push)
+	if timecontrol_active==true:
+		timeInputs()
+	pass
 
 #Fonction qui traduit les inputs du joueur en direction
 func get_direction() -> Vector2:
+	var test_facing = Input.get_action_strength("move_right") - Input.get_action_strength("move_left") #On détermine dans quel sens le joueur "regarde"
+	if test_facing <0: #Si la direction générale est la droite, on oriente le joueur vers la droite (true pour la variable facing)
+		facing=true
+		TimeControl.set_player_facing(true) #On informe TimeControl de la direction du joueur
+	elif test_facing>0:
+		facing=false
+		TimeControl.set_player_facing(false)
 	return Vector2(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		-1.0 if Input.get_action_strength("jump") and is_on_floor() else 1.0
@@ -65,7 +75,7 @@ func calculate_move_velocity(
 func _on_PhysicalHitbox_body_entered(body: Node) -> void:
 	if body is Enemy: #Si le corps étranger est un enemy, on appelle la fonction "hit" du joueur
 		hit(1)
-  pass
+	pass
 
 #Fonction appelée lorsque le joueur prends un dégât
 func hit(dmg):
@@ -105,7 +115,6 @@ func attack():
 	is_attacking=false
 	pass
 
-
 #Fonction appelée par TimeControl qui permet de sauvegarder la position du joueur :
 func save():
 	timeposition=position
@@ -115,6 +124,11 @@ func save():
 func timeReset():
 	position=timeposition
 	timecontrol_active=false #On indique que on ne controle plus le temps (on peut recommencer à le modifier)
+	print(TimeControl.get_player_inputs())
+	yield(get_tree().create_timer(1.0), "timeout")
+	var clone = Clone.instance()
+	get_parent().add_child(clone)
+	clone.position=get_global_position()
 	pass
 
 #Cette fonction est appelée quand le joueur rentre dans une zone
@@ -122,9 +136,24 @@ func _on_PhysicalHitbox_area_entered(area: Area2D) -> void:
 	if area is GravityField: #Si le corps est un champ de gravité, on appliquera la gravité de ce champ
 		is_in_gravity_field = true
 		gravity_area = area
-	
+
 #Cette fonction est appelé quand le joueur quitte une zone 
 func _on_PhysicalHitbox_area_exited(area: Area2D) -> void:
 	if area is GravityField: #Si le corps est un champ de gravité, on appliquera plus la gravité de ce champ
 		gravity = default_gravity
 		is_in_gravity_field = false
+
+#Cette fonction est appelée à chaque frame lorsque le joueur lance le rembobinage temporel
+#Elle va enregistrer les actions du joueur afin que le clone temporel puisse les refaire
+func timeInputs():
+	if Input.is_action_just_pressed("attack"):
+		TimeControl.set_player_inputs("attack")
+	elif Input.is_action_pressed("jump"):
+		TimeControl.set_player_inputs("jump")
+	elif Input.is_action_pressed("move_left"):
+		TimeControl.set_player_inputs("move_left")
+	elif Input.is_action_pressed("move_right"):
+		TimeControl.set_player_inputs("move_right")
+	else:
+		TimeControl.set_player_inputs(null)
+	pass
