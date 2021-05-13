@@ -3,15 +3,15 @@
 [ext_resource path="res://Resources/Art/start-assets/new_dynamicfont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Resources/Art/fenetre_sci_fi.png" type="Texture" id=2]
 
-[sub_resource type="StyleBoxTexture" id=4]
-texture = ExtResource( 2 )
-region_rect = Rect2( 0, 0, 820, 280 )
-
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 820, 280 )
 
 [sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 820, 280 )
+
+[sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 820, 280 )
 
@@ -25,6 +25,6 @@ Button/constants/hseparation = 2
 Button/fonts/font = null
 Button/styles/disabled = null
 Button/styles/focus = null
-Button/styles/hover = SubResource( 4 )
-Button/styles/normal = SubResource( 1 )
-Button/styles/pressed = SubResource( 2 )
+Button/styles/hover = SubResource( 1 )
+Button/styles/normal = SubResource( 2 )
+Button/styles/pressed = SubResource( 3 )
