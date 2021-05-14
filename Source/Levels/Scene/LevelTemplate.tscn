@@ -102,6 +102,7 @@ collision_mask = 1
 [node name="Button" parent="Laser" instance=ExtResource( 9 )]
 position = Vector2( 36.0454, -1378.32 )
 rotation = 1.5708
+
 [connection signal="body_entered" from="Laser/Button" to="Laser" method="_on_Button_body_entered"]
 [connection signal="body_exited" from="Laser/Button" to="Laser" method="_on_Button_body_exited"]
 
