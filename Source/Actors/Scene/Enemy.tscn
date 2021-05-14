@@ -1,47 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Resources/Art/creatures.png" type="Texture" id=1]
+[ext_resource path="res://Resources/Art/start-assets/enemy.png" type="Texture" id=1]
 [ext_resource path="res://Source/Actors/Script/Enemy.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 46.7586, 35.7425 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 32.3973, 37.6047 )
-
-[sub_resource type="Animation" id=3]
-resource_name = "mort"
-length = 0.5
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("enemy:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 47, 47, 87, 87, 47, 87, 47, 87, 47, 87 ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "roule"
-length = 0.3
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("enemy:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ 44, 45, 46 ]
-}
+extents = Vector2( 32.3973, 38.9618 )
 
 [node name="Enemy" type="KinematicBody2D"]
 position = Vector2( 340.563, 281.7 )
@@ -50,12 +16,8 @@ collision_mask = 5
 script = ExtResource( 2 )
 
 [node name="enemy" type="Sprite" parent="."]
-position = Vector2( 1.99292, -39.281 )
-scale = Vector2( 4, 4 )
+position = Vector2( 0, -48 )
 texture = ExtResource( 1 )
-vframes = 30
-hframes = 4
-frame = 45
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -32 )
@@ -95,8 +57,5 @@ enabled = true
 cast_to = Vector2( 0, 15 )
 collision_mask = 12
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/mort = SubResource( 3 )
-anims/roule = SubResource( 4 )
 [connection signal="area_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_entered"]
 [connection signal="area_exited" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_exited"]

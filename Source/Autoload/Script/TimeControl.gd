@@ -9,6 +9,7 @@ func timereset():
 	for node in get_tree().get_nodes_in_group("timecontrol") : #On appelle la fonction save() de chaque élément qui subit les fluctuations temporelles (et qui est dans le groupe attitré "timecontrol")
 		node.save()
 	$TimeResetTimer.start() #On lance le timer qui "délimite" la frange temporelle
+	player_inputs=[]
 	pass
 
 #Cette fonction est appelée lorsque le TimeResetTimer se termine (fin de la frange temporelle)

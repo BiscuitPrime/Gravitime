@@ -3,21 +3,23 @@ extends RigidBody2D
 
 
 var timeposition #variable qui contiendra la position de la caisse lorsqu'elle remontera le temps
+var timerotation #variable qui contiendra la rotaton de la caisse avant le rembobinage temporel
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	can_sleep = false
-	set_friction(0.7)
 	add_to_group("timecontrol") #On l'ajoute au groupe timecontrol, ce qui indique que le temps va l'affecter
 	pass # Replace with function body.
 
-#fonction qui enregistre la position de la caisse afin de produire le rembobinage temporel
+#fonction qui enregistre la position et la rotation de la caisse afin de produire le rembobinage temporel
 func save():
 	timeposition=position
+	timerotation=rotation
 
 #fonction qui est appelée par TimeControl et permet le "rembobinage temporel" de la caisse :
 func timeReset():
 	position=timeposition
+	rotation=timerotation
 
 #fonction appelée dès que la caisse entre dans une zone. Teste notamment si la caisse  est rentrée dans un champ de gravité pour activer les effets de ce dernier.
 func _on_PhysicalHitbox_area_entered(area: Area2D) -> void:

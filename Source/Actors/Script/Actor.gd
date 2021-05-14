@@ -7,7 +7,7 @@ const FLOOR_NORMAL: = Vector2.UP
 #Constante contenant la vitesse limite des acteurs (ennemis, clone temporel, player)
 export var speed: = Vector2(800.0, 1600.0)
 
-#ici toutes les variables en rapport avec la gravité.
+#ici toutes les varaiables en rapport avec la gravité.
 export var gravity: = Vector2(0.0, 3200.0)
 export var gravity_factor: = 1.0 #représente le sensibilité à la gravité de l'acteur 
 const default_gravity: = Vector2(0.0, 3200.0) #gravité hors des champs 
