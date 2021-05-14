@@ -4,19 +4,20 @@ extends Actor
 
 export (PackedScene) var Melee #Contient la scène de l'attaque qui sera utilisée
 
+export (int, 0, 200) var push = 100 #Impulsion qui permet de déplacer les RigidBody2D
+
 var inputs #cette variable va contenir les inputs stockés du joueur, que le clone va devoir reproduire
 var i=0 #Utilisé pour parcourir l'array d'inputs
 var input #contiendra l'input à une frame précise
 var n #contient la taille de inputs
 var facing = true #cette variable va indiquer dans quel sens le clone du joueur se tient : true si x>0, false sinon
-onready var _animation_player = $AnimationPlayer #pour l'animation du clone 
-onready var sprite = $TimeClone #pour changer rapidement le sens du sprite
 
 #Cette fonction est appelée lors de l'initialisation du clone
 func _ready():
 	inputs=TimeControl.get_player_inputs() #Lors de l'initialisation du clone temporel, on lui donne un array contenant les inputs du joueur lors de la sélection temporel
 	n=inputs.size()
 	$TimeResetTimer.start()#on lance le timer de "vie" du clone
+	$PlayerContactTimer.start() #On lance le timer qui va activer la hitbox du clone vis-à-vis du joueur
 	pass
 
 #Cette fonction est appelée à chaque frame du jeu:
@@ -26,9 +27,12 @@ func _physics_process(delta: float) -> void:
 	print(input)
 	var is_jump_interrupted:bool = input=="jump" and _velocity.y < 0.0 #On détermine si le clone voit son saut s'interrompre ou non
 	var direction :Vector2 = get_direction() #On détermine la direction du clone
-	movements_animation(direction)
 	_velocity = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted) #On calcule la nouvelle vélocité du clone
 	_velocity = move_and_slide(_velocity, FLOOR_NORMAL, false, 4, PI/4, false) #On applique la vélocité au clone
+	for index in get_slide_count():
+		var collision = get_slide_collision(index)
+		if collision.collider.is_in_group("Pushables"):
+				collision.collider.apply_central_impulse(-collision.normal * push)
 	if i<n-1: #On parcourt la liste des inputs du joueur
 		i=i+1
 	else :
@@ -63,27 +67,10 @@ func get_direction():
 		-1.0 if input=="jump" and is_on_floor() else 1.0
 	)
 
-#fonction qui détermine quelle animation correspond au mouvement actuel pour le clone
-func movements_animation(direction: Vector2) -> void:
-	var anim_actuelle = _animation_player.get_current_animation() 
-	#on oriente le sprite dans le bon sens en fonction de la direction
-	if direction.x > 0 :
-			sprite.flip_h = false 
-	elif direction.x < 0 :
-			sprite.flip_h = true
-	if is_on_floor() and anim_actuelle != "hit" and anim_actuelle!= "attaque" :
-		if direction.y < 0 :
-			_animation_player.play("saut")
-		elif direction.x != 0 :
-			_animation_player.play("marche")
-		else : 
-			_animation_player.play("stand by")
-
 #Cette fonction est appelée à chaque frame et détermine comment le clone du joueur agit :
 func clone_action(input):
 	if input=="attack":
 		attack()
-		_animation_player.play("attaque")
 	elif input=="jump":
 		jump()
 	pass
@@ -102,7 +89,6 @@ func _on_PhysicalHitbox_body_entered(body: Node) -> void:
 
 #Fonction appelée lorsque le clone prends un dégât
 func hit(dmg):
-	_animation_player.play("hit")
 	die() #Pour le moment, le clone meurt immédiatement au premier dégât reçu
 	pass
 
@@ -126,4 +112,9 @@ func attack():
 #Fonction appelée lorsque le clone atteint le bout de sa "vie"
 func _on_TimeResetTimer_timeout() -> void:
 	die()
+	pass # Replace with function body.
+
+#Fonction appelée lorsque 1 seconde s'est passé depuis l'initialisation du clone
+func _on_PlayerContactTimer_timeout() -> void:
+	set_collision_mask_bit(0,true)#On change le mask de bit 0 (player) en mask actif i.e. le player sera détecté par le clone
 	pass # Replace with function body.
