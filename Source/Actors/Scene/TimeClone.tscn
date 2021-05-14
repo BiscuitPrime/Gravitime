@@ -1,123 +1,34 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Resources/Art/Clone_sprite.png" type="Texture" id=1]
+[ext_resource path="res://Resources/Art/start-assets/player.png" type="Texture" id=1]
 [ext_resource path="res://Source/Actors/Script/TimeClone.gd" type="Script" id=2]
 [ext_resource path="res://Source/Entities/Scene/MeleeAttack.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 29.2021, 43.7989 )
+extents = Vector2( 40, 48 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 32.8429, 65.2943 )
-
-[sub_resource type="Animation" id=4]
-resource_name = "attaque"
-length = 0.4
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("TimeClone:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 195, 195, 196, 197, 198, 199, 200, 143 ]
-}
-
-[sub_resource type="Animation" id=5]
-resource_name = "hit"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/path = NodePath("TimeClone:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 143, 142, 143, 142, 143, 142, 143 ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "marche"
-length = 0.8
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("TimeClone:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 143, 144, 145, 146, 147, 149, 150, 151 ]
-}
-
-[sub_resource type="Animation" id=6]
-resource_name = "saut"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("TimeClone:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 144, 144 ]
-}
-
-[sub_resource type="Animation" id=7]
-resource_name = "stand by"
-length = 1.2
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("TimeClone:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 0.6, 1.1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 149, 149, 148, 148 ]
-}
+extents = Vector2( 47.366, 48.3008 )
 
 [node name="TimeClone" type="KinematicBody2D"]
-collision_mask = 30
+collision_mask = 2147483662
 script = ExtResource( 2 )
 Melee = ExtResource( 3 )
 
 [node name="TimeClone" type="Sprite" parent="."]
-self_modulate = Color( 1, 1, 1, 0.439216 )
+modulate = Color( 0.831373, 0.611765, 0.890196, 1 )
+self_modulate = Color( 0.815686, 0.647059, 0.909804, 1 )
 position = Vector2( 0, -48 )
-scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
-vframes = 21
-hframes = 13
-frame = 143
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( -1.552, -29.372 )
-scale = Vector2( 1, 1.6 )
+position = Vector2( 0, -48 )
 shape = SubResource( 1 )
 
 [node name="PhysicalHitbox" type="Area2D" parent="."]
 
 [node name="PhysicalBox" type="CollisionShape2D" parent="PhysicalHitbox"]
-visible = false
-position = Vector2( -1.98, -30.138 )
+position = Vector2( -0.374573, -47.1967 )
 shape = SubResource( 2 )
 
 [node name="TimeResetTimer" type="Timer" parent="."]
@@ -128,11 +39,5 @@ one_shot = true
 wait_time = 0.8
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/attaque = SubResource( 4 )
-anims/hit = SubResource( 5 )
-anims/marche = SubResource( 3 )
-anims/saut = SubResource( 6 )
-"anims/stand by" = SubResource( 7 )
 [connection signal="body_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_body_entered"]
 [connection signal="timeout" from="TimeResetTimer" to="." method="_on_TimeResetTimer_timeout"]

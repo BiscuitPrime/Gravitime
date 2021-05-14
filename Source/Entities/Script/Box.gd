@@ -7,7 +7,6 @@ var timeposition #variable qui contiendra la position de la caisse lorsqu'elle r
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	can_sleep = false
-	set_friction(0.7)
 	add_to_group("timecontrol") #On l'ajoute au groupe timecontrol, ce qui indique que le temps va l'affecter
 	pass # Replace with function body.
 

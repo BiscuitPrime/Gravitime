@@ -9,7 +9,7 @@
 [ext_resource path="res://Source/Entities/Scene/Laser.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Source/Gravity/Scene/GravityField.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Source/Entities/Scene/DoorButton.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Source/Entities/Scene/Level_End.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Source/UserInterface/Scene/Pause.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 80, 0, 80, 80, 0, 80 )
@@ -39,10 +39,14 @@ points = PoolVector2Array( 0, 0, 80, 0, 80, 80, 0, 80 )
 
 [node name="PlaceholderLevelTemplate" type="Node2D"]
 
-[node name="GravityField2" parent="." instance=ExtResource( 8 )]
-position = Vector2( 2502.17, 641.413 )
-rotation = 3.14159
-scale = Vector2( -4.03395, -5.35405 )
+[node name="GravityField" parent="." instance=ExtResource( 8 )]
+position = Vector2( 2487.61, 614.768 )
+scale = Vector2( -3.8282, -6.23136 )
+priority = 1.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pause" parent="CanvasLayer" instance=ExtResource( 10 )]
 
 [node name="PlaceholderTileMap" type="TileMap" parent="."]
 tile_set = SubResource( 2 )
@@ -72,9 +76,6 @@ position = Vector2( 617.227, 972.114 )
 position = Vector2( 943.936, 1055.13 )
 collision_mask = 0
 
-[node name="Laser" parent="LaserButton" index="1"]
-modulate = Color( 1, 1, 1, 0 )
-
 [node name="CollisionShape2D" parent="LaserButton" index="2"]
 position = Vector2( -2.66974, -488 )
 
@@ -90,9 +91,6 @@ position = Vector2( 3162, 275.706 )
 [node name="Box2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 2416.06, 939.727 )
 
-[node name="Level_End" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1316.6, 2103.62 )
-
 [node name="Laser" parent="." instance=ExtResource( 7 )]
 position = Vector2( 2112.47, 361.433 )
 rotation = 1.5708
@@ -102,6 +100,7 @@ collision_mask = 1
 [node name="Button" parent="Laser" instance=ExtResource( 9 )]
 position = Vector2( 36.0454, -1378.32 )
 rotation = 1.5708
+
 [connection signal="body_entered" from="Laser/Button" to="Laser" method="_on_Button_body_entered"]
 [connection signal="body_exited" from="Laser/Button" to="Laser" method="_on_Button_body_exited"]
 
