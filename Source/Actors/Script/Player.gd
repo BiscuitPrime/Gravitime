@@ -5,7 +5,7 @@ extends Actor
 export (PackedScene) var Melee #Contient la scène de l'attaque qui sera utilisée
 export (PackedScene) var Clone #Contient le clone temporel qui sera utilisé
 
-export (int, 0, 200) var push = 100 #Impulsion qui permet de déplacer les RigidBody2D
+export (int, 0, 200) var push = 75 #Impulsion qui permet de déplacer les RigidBody2D
 
 #On déclare les variables :
 var spawn_position : Vector2 #Cette variable va stocker la position du spawn du joueur 
@@ -13,6 +13,8 @@ var is_attacking=false #Indique si le joueur attaque ou non
 var facing = true #cette variable va indiquer dans quel sens le joueur se tient : true si x>0, false sinon
 var timecontrol_active = false #cette variable indique si le joueur est e train de manipuler le temps ou non
 var timeposition #variable qui contiendra la position du joueur lorsqu'il remontera le temps
+onready var _animation_player = $AnimationPlayer #pour l'animation du joueur 
+onready var sprite = $player #pour changer rapidement le sens du sprite
 
 
 #Cette fonction est appelée lors de l'instanciation du joueur
@@ -20,6 +22,7 @@ func _ready():
 	#On initialise la var spawn_position du joueur sur sa position une fois initialisé 
 	#position donnée lors du placement de l'instance joueur lors de la création du niveau
 	spawn_position=position 
+	_animation_player.play("stand by")
 	add_to_group("timecontrol") #On l'ajoute au groupe timecontrol, ce qui indique que le temps va l'affecter
 	pass
 
@@ -28,6 +31,7 @@ func _physics_process(delta: float) -> void:
 	skills() #Cette fonction va tester si le joueur fait une action ou non
 	var is_jump_interrupted: = Input.is_action_just_released("jump") and _velocity.y < 0.0
 	var direction: = get_direction()
+	movements_animation(direction)
 	if is_in_gravity_field:
 		apply_gravity(gravity_area)
 	_velocity = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
@@ -54,6 +58,20 @@ func get_direction() -> Vector2:
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		-1.0 if Input.get_action_strength("jump") and is_on_floor() else 1.0
 	)
+#Fonction qui permet de lancer au bon moment les animations de déplacements
+func movements_animation(direction: Vector2) -> void:
+	var anim_actuelle = _animation_player.get_current_animation() 
+	if direction.x > 0 :
+			sprite.flip_h = false 
+	elif direction.x < 0 :
+			sprite.flip_h = true
+	if is_on_floor() and anim_actuelle != "hit" and anim_actuelle != "mort" and anim_actuelle!= "attaque" :
+		if direction.y < 0 :
+			_animation_player.play("saut")
+		elif direction.x != 0 :
+			_animation_player.play("marche")
+		else : 
+			_animation_player.play("stand by")
 
 #Fonction qui calcule la vitesse du joueur
 func calculate_move_velocity(
@@ -81,6 +99,8 @@ func _on_PhysicalHitbox_body_entered(body: Node) -> void:
 func hit(dmg):
 	var life = GeneralData.player_hp #On créer une variable locale pour simplifier code
 	if (life-dmg) > 0 :
+		_animation_player.stop(true)
+		_animation_player.play("hit")
 		GeneralData.player_hp=life-dmg
 	else :
 		die()
@@ -90,6 +110,9 @@ func hit(dmg):
 #Fonction appelée lorsque le joueur meurt
 #Pour le moment, elle se contente de détruire l'instance du joueur
 func die():
+	_animation_player.stop()
+	_animation_player.play("mort")
+	yield(_animation_player, "animation_finished")
 	queue_free()
 
 #Fonction appelée à chaque frame et indiquant si le joueur utilise un skill ou non
@@ -97,6 +120,7 @@ func skills():
 	if Input.is_action_just_pressed("attack") and is_attacking==false: #Si le joueur appuie sur attaque (et il n'est pas déjà en train d'attaquer)
 		attack() #Un des skills est d'attaquer, on appelle 
 		is_attacking=true
+		_animation_player.play("attaque")
 	if Input.is_action_just_pressed("time") and timecontrol_active==false:
 		TimeControl.timereset() #On demande à TimeControl de lancer la fonction de reset temporel
 		timecontrol_active=true #On indique que l'on remonte le temps
