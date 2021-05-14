@@ -6,8 +6,6 @@ onready var animation = $AnimationPlayer
 
 export var next_level : PackedScene
 
-func _ready() -> void:
-	animation.play("portail_mouvement")
 #Cette fonction est appelée lorsque le joueur change de niveau
 #Elle permet de changer de niveau
 func change_level():
