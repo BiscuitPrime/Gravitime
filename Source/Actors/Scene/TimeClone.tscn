@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Resources/Art/start-assets/player.png" type="Texture" id=1]
 [ext_resource path="res://Source/Actors/Script/TimeClone.gd" type="Script" id=2]
+[ext_resource path="res://Source/Entities/Scene/MeleeAttack.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 40, 48 )
@@ -12,6 +13,7 @@ extents = Vector2( 47.366, 48.3008 )
 [node name="TimeClone" type="KinematicBody2D"]
 collision_mask = 2147483662
 script = ExtResource( 2 )
+Melee = ExtResource( 3 )
 
 [node name="TimeClone" type="Sprite" parent="."]
 modulate = Color( 0.831373, 0.611765, 0.890196, 1 )
@@ -28,4 +30,14 @@ shape = SubResource( 1 )
 [node name="PhysicalBox" type="CollisionShape2D" parent="PhysicalHitbox"]
 position = Vector2( -0.374573, -47.1967 )
 shape = SubResource( 2 )
+
+[node name="TimeResetTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+
 [connection signal="body_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_body_entered"]
+[connection signal="timeout" from="TimeResetTimer" to="." method="_on_TimeResetTimer_timeout"]

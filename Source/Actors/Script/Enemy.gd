@@ -36,7 +36,6 @@ func calculate_new_velocity(_velocity):
 func hit(dmg):
 	queue_free() #Pour le moment, l'ennemi sera détruit - plus tard, on mettra un système de vie
 
-
 #Fonction appelée par TimeControl qui permet de sauvegarder la position du joueur :
 func save():
 	timeposition=position
