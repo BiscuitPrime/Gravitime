@@ -3,9 +3,10 @@ extends Area2D
 
 #déclaration des champs de la zone.
 var gravity_field: = Vector2(0, 3200) # Vecteur champ de gravité utilisé par les actors
-export var norm_max: = 6000
+export var norm_max: = 6400
 export var norm_min: = 300
-export var sensibility: = 10 #facteur de sensibilité de changement de la gravité
+var norm_default: = norm_max/2 #norme par défault à l'instanciation du champ
+export var sensibility: = 15 #facteur de sensibilité de changement de la gravité pour la souris
 # coordoonées du dernier clic (utile pour calculer nouveau vecteur champ):
 var origin: = position
 #booléen pour indiquer si le jouer est en train de modifier le champ
@@ -13,9 +14,11 @@ var is_dragging: = false
 var is_in_zone: = false #indique si la souris est dans la zone
 
 
-# Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-	#pass # Replace with function body.
+# fonction appelé à la création du champs
+func _ready() -> void:
+	gravity_field = Vector2(0,1)*norm_default
+	gravity_vec = (gravity_field/norm_default)*98
+	pass 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #Pour le moment, elle ne sert que pour des tests (d'où le fait qu'elle soit en commentaire)
@@ -42,9 +45,15 @@ func _input(event: InputEvent) -> void:
 	#calculer le nouveau vecteur.
 	if event is InputEventMouseMotion and is_dragging:
 		gravity_field = calculate_gravity(origin, event.position)
+		indique_sens_intensite((gravity_field.angle() - PI/2), gravity_field.length()/norm_max)
 				
 
-
+func indique_sens_intensite(angle: float, intensite: float) -> void:
+	var enfants = get_node("Sprite").get_children()
+	for enfant in enfants :
+		enfant.rotation = angle
+		enfant.scale = Vector2(0.4 - 0.2*intensite,0.3*intensite)
+		
 
 #Cette fonction permet de récupérer le vecteur champ de gravité depuis les 
 #autres scripts (utile pour les actors et entities)
@@ -59,7 +68,7 @@ func calculate_gravity(origin: Vector2, end: Vector2) -> Vector2:
 	var grav : = sensibility * (end - origin)
 	grav = grav.clamped(norm_max) #on limite la norme max de la gravité.
 	grav = max(grav.length(), norm_min) * grav.normalized() #on limite la norme min également
-	gravity_vec = grav #cette ligne sert pour les rigid body 2D qui font appel au moteur physique de godot
+	gravity_vec = (grav/norm_default)*98 #cette ligne sert pour les rigid body 2D qui font appel au moteur physique de godot
 	return grav
 
 #quand la souris rentre dans la zone
