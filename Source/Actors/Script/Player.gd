@@ -50,10 +50,8 @@ func get_direction() -> Vector2:
 	var test_facing = Input.get_action_strength("move_right") - Input.get_action_strength("move_left") #On détermine dans quel sens le joueur "regarde"
 	if test_facing <0: #Si la direction générale est la droite, on oriente le joueur vers la droite (true pour la variable facing)
 		facing=true
-		TimeControl.set_player_facing(true) #On informe TimeControl de la direction du joueur
 	elif test_facing>0:
 		facing=false
-		TimeControl.set_player_facing(false)
 	return Vector2(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		-1.0 if Input.get_action_strength("jump") and is_on_floor() else 1.0
@@ -149,7 +147,6 @@ func timeReset():
 	position=timeposition
 	timecontrol_active=false #On indique que on ne controle plus le temps (on peut recommencer à le modifier)
 	print(TimeControl.get_player_inputs())
-	yield(get_tree().create_timer(1.0), "timeout")
 	var clone = Clone.instance()
 	get_parent().add_child(clone)
 	clone.position=get_global_position()

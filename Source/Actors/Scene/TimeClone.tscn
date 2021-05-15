@@ -10,7 +10,7 @@ extents = Vector2( 29.2021, 43.7989 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32.8429, 65.2943 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "attaque"
 length = 0.4
 step = 0.05
@@ -27,7 +27,7 @@ tracks/0/keys = {
 "values": [ 195, 195, 196, 197, 198, 199, 200, 143 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 resource_name = "hit"
 length = 0.7
 tracks/0/type = "value"
@@ -43,8 +43,7 @@ tracks/0/keys = {
 "values": [ 143, 142, 143, 142, 143, 142, 143 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "marche"
+[sub_resource type="Animation" id=5]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -103,8 +102,8 @@ self_modulate = Color( 1, 1, 1, 0.439216 )
 position = Vector2( 0, -48 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
-vframes = 21
 hframes = 13
+vframes = 21
 frame = 143
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -129,10 +128,15 @@ wait_time = 0.8
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/attaque = SubResource( 4 )
-anims/hit = SubResource( 5 )
-anims/marche = SubResource( 3 )
+anims/attaque = SubResource( 3 )
+anims/hit = SubResource( 4 )
+anims/marche = SubResource( 5 )
 anims/saut = SubResource( 6 )
 "anims/stand by" = SubResource( 7 )
+
+[node name="CollisionTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="body_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_body_entered"]
 [connection signal="timeout" from="TimeResetTimer" to="." method="_on_TimeResetTimer_timeout"]
+[connection signal="timeout" from="CollisionTimer" to="." method="_on_CollisionTimer_timeout"]

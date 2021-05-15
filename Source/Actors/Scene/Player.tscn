@@ -121,8 +121,8 @@ Clone = ExtResource( 4 )
 position = Vector2( 0, -48 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
-vframes = 21
 hframes = 13
+vframes = 21
 frame = 143
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -151,6 +151,7 @@ anims/marche = SubResource( 5 )
 anims/mort = SubResource( 6 )
 anims/saut = SubResource( 7 )
 "anims/stand by" = SubResource( 8 )
+
 [connection signal="area_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_entered"]
 [connection signal="area_exited" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_exited"]
 [connection signal="body_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_body_entered"]

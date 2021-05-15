@@ -17,6 +17,7 @@ func _ready():
 	inputs=TimeControl.get_player_inputs() #Lors de l'initialisation du clone temporel, on lui donne un array contenant les inputs du joueur lors de la sélection temporel
 	n=inputs.size()
 	$TimeResetTimer.start()#on lance le timer de "vie" du clone
+	$CollisionTimer.start()#Lance le timer de collision du clone (collision avec joueur)
 	pass
 
 #Cette fonction est appelée à chaque frame du jeu:
@@ -126,4 +127,9 @@ func attack():
 #Fonction appelée lorsque le clone atteint le bout de sa "vie"
 func _on_TimeResetTimer_timeout() -> void:
 	die()
+	pass # Replace with function body.
+
+#Fonction appelée lorsque le clone 
+func _on_CollisionTimer_timeout() -> void:
+	set_collision_mask_bit(0,true)
 	pass # Replace with function body.
