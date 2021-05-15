@@ -53,8 +53,8 @@ script = ExtResource( 2 )
 position = Vector2( 1.99292, -39.281 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
-vframes = 30
 hframes = 4
+vframes = 30
 frame = 45
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -98,5 +98,6 @@ collision_mask = 12
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/mort = SubResource( 3 )
 anims/roule = SubResource( 4 )
+
 [connection signal="area_entered" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_entered"]
 [connection signal="area_exited" from="PhysicalHitbox" to="." method="_on_PhysicalHitbox_area_exited"]

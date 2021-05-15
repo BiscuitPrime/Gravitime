@@ -9,7 +9,7 @@
 extents = Vector2( 30.4039, 44.5912 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 34.1041, 66.0687 )
+extents = Vector2( 40.101, 73.5121 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "attaque"
@@ -133,12 +133,13 @@ shape = SubResource( 1 )
 [node name="PhysicalHitbox" type="Area2D" parent="."]
 
 [node name="PhysicalBox" type="CollisionShape2D" parent="PhysicalHitbox"]
-visible = false
 position = Vector2( -1.98038, -30.1381 )
 shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -223.51 )
 current = true
+zoom = Vector2( 2, 2 )
 
 [node name="ReloadTimer" type="Timer" parent="."]
 wait_time = 0.8

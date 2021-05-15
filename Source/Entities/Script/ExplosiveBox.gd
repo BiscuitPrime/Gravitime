@@ -31,10 +31,10 @@ func _on_PhysicalHitbox_area_exited(area: Area2D) -> void:
 		can_sleep = true
 
 
-#Cette fonction est appelée quand un corps étranger rentre dans le laser
-#Si le corps étranger a une méthode hit, on l'appelle
+#Cette fonction est appelée lorsque la caisse rentre en contact avec le boss
 func _on_PhysicalHitbox_body_entered(body: Node) -> void:
 	if body.has_method("boss_hit"):
-		body.boss_hit(1)
+		body.boss_hit(1) #on inflige 1 dégât au boss
+		queue_free() #la caisse est détruite
 	pass # Replace with function body.
 

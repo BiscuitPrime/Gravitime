@@ -24,6 +24,7 @@ func _ready():
 	spawn_position=position 
 	_animation_player.play("stand by")
 	add_to_group("timecontrol") #On l'ajoute au groupe timecontrol, ce qui indique que le temps va l'affecter
+	add_to_group("player")
 	pass
 
 #Cette fonction est appelée à chaque frame du jeu
@@ -89,7 +90,7 @@ func calculate_move_velocity(
 
 #Cette fonction est appelée lorsque le joueur rentre en contact avec un corps étranger :
 func _on_PhysicalHitbox_body_entered(body: Node) -> void:
-	if body is Enemy: #Si le corps étranger est un enemy, on appelle la fonction "hit" du joueur
+	if body.is_in_group("enemy"):
 		hit(1)
 	pass
 

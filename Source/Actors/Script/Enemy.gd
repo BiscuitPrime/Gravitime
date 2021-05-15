@@ -14,8 +14,10 @@ var timeposition #variable qui va contenir la position de l'ennemi avant la mani
 #Cette fonction est appelée lorsque l'instance de l'ennemi est loadée
 func _ready():
 	add_to_group("timecontrol") #On l'ajoute au groupe timecontrol, ce qui indique que le temps va l'affecter
+	add_to_group("enemy")
 	_velocity.x = -speed.x #On donne une vitesse initiale à l'ennemi
 	_animation_player.play("roule")
+
 #Cette fonction est appelée à chaque frame du jeu 
 func _physics_process(delta: float) -> void:
 	if is_in_gravity_field:
@@ -33,6 +35,8 @@ func calculate_new_velocity(_velocity):
 	elif DetectorLeft.is_colliding() or DetectorRight.is_colliding(): #Si l'ennemi détecte un mur, il rebrousse chemin
 		_velocity.x *= -1.0
 		sprite.flip_h = not sprite.flip_h
+	if _velocity.x==0:
+		_velocity.x=-speed.x
 	return _velocity
 
 #Cette fonction est appelée lorsque l'ennemi est touché par l'attaque du joueur
