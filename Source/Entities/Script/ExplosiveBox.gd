@@ -8,6 +8,7 @@ func _ready() -> void:
 	can_sleep = false
 	set_friction(0.7)
 	add_to_group("timecontrol") #On l'ajoute au groupe timecontrol, ce qui indique que le temps va l'affecter
+	save() #Pour que les caisses qui spawn entre le début du timer et la fin aient une position à laquelle revenir
 	pass # Replace with function body.
 
 #fonction qui enregistre la position de la caisse afin de produire le rembobinage temporel
