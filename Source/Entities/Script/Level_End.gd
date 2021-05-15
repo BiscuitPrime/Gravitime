@@ -20,5 +20,4 @@ func change_level():
 func _on_Level_End_body_entered(body):
 	if body.is_in_group("player"):
 		change_level() #On appelle la fonction changement de niveau
-		body.changing_level() #On appelle les fonctions gérant le changement de niveau de chaque entité
 	pass # Replace with function body.

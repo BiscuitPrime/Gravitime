@@ -18,9 +18,13 @@ func boss_hit(dmg):
 func _on_ReloadTimer_timeout() -> void:
 	var Projectile = projectile.instance()
 	add_child(Projectile)
-	var player_position
-	for i in get_tree().get_nodes_in_group("player"):
-		player_position=i.position
-	var direcvector = player_position - position
-	Projectile.linear_velocity = direcvector.normalized()*3000
+	var target_position : Vector2
+	if TimeControl.get_clone_exists()==true : #Si un clone temporel existe, le boss va le prioritiser
+		for j in get_tree().get_nodes_in_group("timeclone"):
+			target_position=j.position
+	else : #Si il n'y a
+		for i in  get_tree().get_nodes_in_group("player"):
+			target_position=i.position
+	var direcvector = target_position - position #On oriente le tir du boss
+	Projectile.linear_velocity = direcvector.normalized()*2000 #On lui donne une vitesse
 	pass # Replace with function body.

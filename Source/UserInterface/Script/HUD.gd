@@ -1,6 +1,7 @@
 extends Control
-#Ce script est utilisé par le HUD pour montrer le nombres de points de vie du joueur
+#Ce script est utilisé par le HUD pour montrer la vie du joueur
 
-#Cette fonction actualise les points de vie du joueur
+#Cette fonction actualise la vie
 func _process(delta):
-	$CenterContainer/HP_Label.text = "HP = "+String(GeneralData.player_hp)
+	$CenterContainer/HP_Label.text = "HP = "+String(GeneralData.get_player_hp())
+

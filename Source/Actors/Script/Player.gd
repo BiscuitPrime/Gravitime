@@ -4,6 +4,8 @@ extends Actor
 
 export (PackedScene) var Melee #Contient la scène de l'attaque qui sera utilisée
 export (PackedScene) var Clone #Contient le clone temporel qui sera utilisé
+export (PackedScene) var DeathScreen #Contient le screen de mort
+export (PackedScene) var TimeHUD #Contient l'HUD du rembobinage temporel
 
 export (int, 0, 200) var push = 75 #Impulsion qui permet de déplacer les RigidBody2D
 
@@ -113,6 +115,8 @@ func die():
 	_animation_player.play("mort")
 	yield(_animation_player, "animation_finished")
 	queue_free()
+	get_tree().change_scene_to(DeathScreen) #On charge le DeathScreen
+	GeneralData.player_hp=10 #On réinitialise la vie du joueur pour les parties suivantes
 
 #Fonction appelée à chaque frame et indiquant si le joueur utilise un skill ou non
 func skills():
@@ -123,6 +127,8 @@ func skills():
 	if Input.is_action_just_pressed("time") and timecontrol_active==false:
 		TimeControl.timereset() #On demande à TimeControl de lancer la fonction de reset temporel
 		timecontrol_active=true #On indique que l'on remonte le temps
+		var timeHUD = TimeHUD.instance() #On affiche l'HUD du timer temporel
+		add_child(timeHUD)
 	pass
 
 #Fonction appelée lorsque le joueur attaque
@@ -130,9 +136,9 @@ func attack():
 	var melee = Melee.instance()
 	get_parent().add_child(melee)
 	if facing == false:
-		melee.position=get_global_position()+Vector2(100,-50)
+		melee.position=get_global_position()+Vector2(100,-30)
 	else:
-		melee.position=get_global_position()+Vector2(-100,-50)
+		melee.position=get_global_position()+Vector2(-100,-30)
 	$ReloadTimer.start()
 	yield($ReloadTimer, "timeout")
 	is_attacking=false
