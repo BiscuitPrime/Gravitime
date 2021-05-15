@@ -3,7 +3,6 @@ extends Actor
 #Ce script est utilisé par le boss
 
 var boss_hp = 3
-export(PackedScene) var box_scene
 export (PackedScene) var projectile #On load le projectile du boss
 
 func _ready():
@@ -16,18 +15,12 @@ func boss_hit(dmg):
 		queue_free() 
 		get_tree().change_scene("res://Source/Levels/Scene/EndScreen.tscn")
 
-func _on_BoxSpawnTimer_timeout() -> void:
-	var box_spawn_location = get_node("BoxPath/BoxSpawnLocation")
-	var box = box_scene.instance()
-	add_child(box)
-	box.position = box_spawn_location.position
-	
-
 func _on_ReloadTimer_timeout() -> void:
 	var Projectile = projectile.instance()
 	add_child(Projectile)
-	var direction
+	var player_position
 	for i in get_tree().get_nodes_in_group("player"):
-		direction=i.position
-	Projectile.linear_velocity = direction
+		player_position=i.position
+	var direcvector = player_position - position
+	Projectile.linear_velocity = direcvector.normalized()*3000
 	pass # Replace with function body.

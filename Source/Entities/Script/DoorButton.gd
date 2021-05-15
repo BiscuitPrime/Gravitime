@@ -1,5 +1,5 @@
 extends Area2D
-
+var nb_corps
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer")
 
 func _ready():
