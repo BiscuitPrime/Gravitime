@@ -2,6 +2,8 @@ extends "res://addons/gut/test.gd"
 #Ce script teste les différentes méthodes de la classe Player
 
 var player = preload("res://Source/Actors/Script/Player.gd").new() #On load le script de Player comme nouvelle instance que l'on va tester
+var actor = preload("res://Source/Actors/Script/Actor.gd").new()
+var gravity_field = preload("res://Source/Gravity/Script/GravityField.gd").new()
 
 #On teste si la méthode save() du joueur fonctionne : (elle doit enregistrer une position)
 func test_save():
@@ -14,7 +16,6 @@ func test_skills():
 	assert_eq(player.is_attacking,true,"Should fail : sans input de l'utilisateur, player n'utilise pas d'attaque : is_attacking = false")
 	assert_eq(player.timecontrol_active,true,"Should fail : sans input de l'utilisateur, player n'utilise pas le rembobinage temporel : timecontrol_active = false")
 
-#On teste la méthode calculate_new_velocity() pour voir si on calcule correctement :
-func test_move_velocity():
-	var out = player.calculate_move_velocity(Vector2(10,10), Vector2(1,-1), Vector2(800,1600), false)
-	assert_eq(out, Vector2(800.0,-1600), "Should suceed : out.x = (800*1) et out.y=-1*1600 car direction.y=-1")
+func test_on_PhysicalHitbox_area_entered():
+	player._on_PhysicalHitbox_area_entered(gravity_field)
+	assert_eq(player.is_in_gravity_field,true,"Should succeed")

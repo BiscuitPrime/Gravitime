@@ -132,19 +132,7 @@ func _on_TimeResetTimer_timeout() -> void:
 	die()
 	pass # Replace with function body.
 
-#Fonction appelée lorsque le clone s'écarte suffisament du joueur
+#Fonction appelée lorsque le clone 
 func _on_CollisionTimer_timeout() -> void:
 	set_collision_mask_bit(0,true)
 	pass # Replace with function body.
-
-#Cette fonction est appelée quand le joueur rentre dans une zone
-func _on_PhysicalHitbox_area_entered(area: Area2D) -> void:
-	if area is GravityField: #Si le corps est un champ de gravité, on appliquera la gravité de ce champ
-		is_in_gravity_field = true
-		gravity_area = area
-
-#Cette fonction est appelé quand le joueur quitte une zone 
-func _on_PhysicalHitbox_area_exited(area: Area2D) -> void:
-	if area is GravityField: #Si le corps est un champ de gravité, on appliquera plus la gravité de ce champ
-		gravity = default_gravity
-		is_in_gravity_field = false

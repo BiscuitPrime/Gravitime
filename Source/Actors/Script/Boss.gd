@@ -22,7 +22,7 @@ func _on_ReloadTimer_timeout() -> void:
 	if TimeControl.get_clone_exists()==true : #Si un clone temporel existe, le boss va le prioritiser
 		for j in get_tree().get_nodes_in_group("timeclone"):
 			target_position=j.position
-	else : #Si il n'y a pas de clone, le boss vise le joueur
+	else : #Si il n'y a
 		for i in  get_tree().get_nodes_in_group("player"):
 			target_position=i.position
 	var direcvector = target_position - position #On oriente le tir du boss
