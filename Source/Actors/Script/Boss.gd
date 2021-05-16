@@ -3,7 +3,6 @@ extends Actor
 #Ce script est utilisé par le boss
 
 var boss_hp = 3
-export(PackedScene) var box_scene
 export (PackedScene) var projectile #On load le projectile du boss
 
 func _ready():
@@ -16,18 +15,16 @@ func boss_hit(dmg):
 		queue_free() 
 		get_tree().change_scene("res://Source/Levels/Scene/EndScreen.tscn")
 
-func _on_BoxSpawnTimer_timeout() -> void:
-	var box_spawn_location = get_node("BoxPath/BoxSpawnLocation")
-	var box = box_scene.instance()
-	add_child(box)
-	box.position = box_spawn_location.position
-	
-
 func _on_ReloadTimer_timeout() -> void:
 	var Projectile = projectile.instance()
 	add_child(Projectile)
-	var direction
-	for i in get_tree().get_nodes_in_group("player"):
-		direction=i.position
-	Projectile.linear_velocity = direction
+	var target_position : Vector2
+	if TimeControl.get_clone_exists()==true : #Si un clone temporel existe, le boss va le prioritiser
+		for j in get_tree().get_nodes_in_group("timeclone"):
+			target_position=j.position
+	else : #Si il n'y a
+		for i in  get_tree().get_nodes_in_group("player"):
+			target_position=i.position
+	var direcvector = target_position - position #On oriente le tir du boss
+	Projectile.linear_velocity = direcvector.normalized()*2000 #On lui donne une vitesse
 	pass # Replace with function body.

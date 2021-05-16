@@ -76,5 +76,6 @@ flip_v = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource( 1 )
+
 [connection signal="mouse_entered" from="." to="." method="_on_GravityField_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_GravityField_mouse_exited"]

@@ -14,6 +14,8 @@ onready var sprite = $TimeClone #pour changer rapidement le sens du sprite
 
 #Cette fonction est appelée lors de l'initialisation du clone
 func _ready():
+	add_to_group("timeclone")
+	TimeControl.set_clone_exists(true) #On indique au jeu qu'un clone temporel existe
 	inputs=TimeControl.get_player_inputs() #Lors de l'initialisation du clone temporel, on lui donne un array contenant les inputs du joueur lors de la sélection temporel
 	n=inputs.size()
 	$TimeResetTimer.start()#on lance le timer de "vie" du clone
@@ -22,7 +24,7 @@ func _ready():
 
 #Cette fonction est appelée à chaque frame du jeu:
 func _physics_process(delta: float) -> void:
-	input = inputs[i] #nous lisons un à un les éléments de la liste inputs (une lecture par frame)
+	input = inputs[i] #nous lisons un à un les éléments de la liste inputs (une lectudqre par frame)
 	clone_action(input) #on appelle la fonction qui va diriger toutes les actions du clone
 	print(input)
 	var is_jump_interrupted:bool = input=="jump" and _velocity.y < 0.0 #On détermine si le clone voit son saut s'interrompre ou non
@@ -110,6 +112,7 @@ func hit(dmg):
 #Fonction appelée lorsque le clone meurt
 #Pour le moment, elle se contente de détruire l'instance du clone
 func die():
+	TimeControl.set_clone_exists(false) #On indique au jeu que le clone n'existe plus
 	queue_free()
 
 #Fonction appelée lorsque le clone attaque
