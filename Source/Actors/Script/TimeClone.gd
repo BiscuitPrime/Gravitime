@@ -132,7 +132,7 @@ func _on_TimeResetTimer_timeout() -> void:
 	die()
 	pass # Replace with function body.
 
-#Fonction appelée lorsque le clone 
+#Fonction appelée lorsque le clone s'écarte suffisament du joueur
 func _on_CollisionTimer_timeout() -> void:
 	set_collision_mask_bit(0,true)
 	pass # Replace with function body.
