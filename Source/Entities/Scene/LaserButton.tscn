@@ -48,6 +48,7 @@ anims/shutdown = SubResource( 2 )
 
 [node name="Button" parent="." instance=ExtResource( 4 )]
 position = Vector2( -96, 0 )
+
 [connection signal="body_entered" from="." to="." method="_on_Laser_body_entered"]
 [connection signal="body_entered" from="Button" to="." method="_on_Button_body_entered"]
 [connection signal="body_exited" from="Button" to="." method="_on_Button_body_exited"]
