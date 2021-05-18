@@ -19,6 +19,9 @@ func test_on_PhysicalHitbox_area_exited():
 	assert_eq(explosiveBox.nb_champs, 0, "Should succeed : explosiveBox sort du champs de gravité i.e. nb_champs=0")
 
 #On teste si ExplosiveBox détecte bien le boss:
+#Ce test ne vérifie pas cela
+"""
 func test_on_PhysicalHitbox_area_entered_boss():
 	explosiveBox._on_PhysicalHitbox_area_entered(boss)
 	assert_eq(boss.has_method("boss_hit"), true, "Should succeed: boss est détecté et possède bien une méthode boss_hit")
+"""
