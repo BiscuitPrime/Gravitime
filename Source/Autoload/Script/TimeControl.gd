@@ -3,6 +3,7 @@ extends Node2D
 
 var player_inputs := [] setget set_player_inputs, get_player_inputs #Cette variable globale contient une liste d'inputs du joueur utilisés par le clone temporel
 var clone_exists := false setget set_clone_exists, get_clone_exists #Cette variable indique si un clone temporel existe ou non
+
 #Cette fonction est appelée par la scène Player lorsque l'utilisateur appuie sur F
 func timereset():
 	player_inputs=[]

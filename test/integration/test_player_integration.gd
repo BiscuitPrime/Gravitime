@@ -15,4 +15,4 @@ func test_on_PhysicalHitbox_area_entered():
 
 func test_on_PhysicalHitbox_area_exited():
 	player._on_PhysicalHitbox_area_exited(gravity_field) #On teste avec un champ
-	assert_eq(player.is_in_gravity_field,false, "Should succeed : player sort du champs de gravité i.e. is_in_gravity_field=true")
+	assert_eq(player.is_in_gravity_field,false, "Should succeed : player sort du champs de gravité i.e. is_in_gravity_field=false")

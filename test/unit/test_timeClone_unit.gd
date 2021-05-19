@@ -14,3 +14,10 @@ func test_jump():
 func test_move_velocity():
 	var out = timeclone.calculate_move_velocity(Vector2(10,10), Vector2(1,-1), Vector2(800,1600), false)
 	assert_eq(out, Vector2(800.0,-1600), "Should suceed : out.x = (800*1) et out.y=-1*1600 car direction.y=-1")
+
+#On teste la méthode get_direction():
+func test_get_direction():
+	timeclone.input="move_right"
+	var out = timeclone.get_direction()
+	assert_eq(out.x, 1.0, "Should succeed : h_direction=1.0")
+	assert_eq(out.x, -1.0, "Should fail : h_direction=-1.0")
