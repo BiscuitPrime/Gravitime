@@ -57,13 +57,13 @@ func calculate_move_velocity(
 #Cette fonction va déterminer la direction du clone, utilisée pour les sauts et les mouvements généraux
 func get_direction():
 	var h_direction=0 #Sans informations externes, le clone n'a pas de direction
-	if input=="move_right":
+	if input=="move_right" or input=="jump_right":
 		h_direction=1.0
-	elif input=="move_left":
+	elif input=="move_left" or input=="jump_left":
 		h_direction=-1.0
 	return Vector2(
 		h_direction,
-		-1.0 if input=="jump" and is_on_floor() else 1.0
+		-1.0 if input=="jump" or input=="jump_left" or input=="jump_right" and is_on_floor() else 1.0
 	)
 
 #fonction qui détermine quelle animation correspond au mouvement actuel pour le clone
@@ -87,14 +87,15 @@ func clone_action(input):
 	if input=="attack":
 		attack()
 		_animation_player.play("attaque")
-	elif input=="jump":
+	elif input=="jump" or input=="jump_left" or input=="jump_right" :
 		jump()
 	pass
 
 #Cette fonction est appelée lorsque le clone saute :
 func jump():
-	_velocity.y=-speed.y
-	_velocity=move_and_slide(_velocity)
+	if is_on_floor():
+		_velocity.y=-speed.y
+		_velocity=move_and_slide(_velocity)
 	pass
 
 #Cette fonction est appelée lorsque le clone rentre en contact avec un corps étranger :

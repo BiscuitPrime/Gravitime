@@ -7,4 +7,4 @@ var explosiveBox = preload("res://Source/Entities/Script/Box.gd").new() #On load
 func test_save():
 	explosiveBox.position = Vector2(45,56)
 	explosiveBox.save()
-	assert_eq(explosiveBox.timeposition, Vector2(0,0), "Should fail : timeposition != null (la boîte a enregistré une position)")
+	assert_eq(explosiveBox.timeposition, Vector2(45,56), "Should succeed : timeposition = (45,56) (la boîte a enregistré une position)")

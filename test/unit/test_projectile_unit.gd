@@ -6,4 +6,4 @@ var projectile = preload("res://Source/Entities/Script/Projectile.gd").new() #On
 #On teste si la méthode _ready() du projectile fonctionne : (elle doit s'assigner au groupe "projectile")
 func test_ready():
 	projectile._ready()
-	assert_eq(false, projectile.is_in_group("projectile"), "Should fail : projectile devrait être dans le groupe \"projectile\"")
+	assert_eq(true, projectile.is_in_group("projectile"), "Should succeed : projectile devrait être dans le groupe \"projectile\"")

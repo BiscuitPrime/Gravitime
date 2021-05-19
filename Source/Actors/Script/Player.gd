@@ -183,6 +183,10 @@ func timeInputs():
 		TimeControl.set_player_inputs("move_left")
 	elif Input.is_action_pressed("move_right"):
 		TimeControl.set_player_inputs("move_right")
+	elif Input.is_action_pressed("move_left") and Input.is_action_pressed("jump"):
+		TimeControl.set_player_inputs("jump_left")
+	elif Input.is_action_pressed("move_right") and Input.is_action_pressed("jump"):
+		TimeControl.set_player_inputs("jump_right")
 	else:
 		TimeControl.set_player_inputs(null)
 	pass

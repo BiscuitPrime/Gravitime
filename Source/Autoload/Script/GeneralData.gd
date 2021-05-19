@@ -8,7 +8,6 @@ var player_hp := 10 setget set_player_hp, get_player_hp #Cette variable globale 
 #Elle remet à l'état initial la vie du joueur
 func reset():
 	player_hp= 10
-	$AudioStreamPlayer.play() #Permet de relancer la musique (on en a pas pour le moment)
 
 #Cette fonction permet de modifier la valeur de la variable player_hp 
 #Elle est appelée par d'autres scripts du programme
@@ -19,6 +18,3 @@ func set_player_hp(value: int):
 #Elle est appelée par d'autres scripts du programme
 func get_player_hp():
 	return player_hp
-
-func music_stop():
-	$AudioStreamPlayer.stop()
