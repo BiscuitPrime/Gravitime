@@ -9,7 +9,7 @@ var gravity_field = preload("res://Source/Gravity/Script/GravityField.gd").new()
 func test_on_PhysicalHitbox_area_entered():
 	box.nb_champs=0
 	box._on_PhysicalHitbox_area_entered(null) #On teste d'abord avec aucun champ
-	assert_eq(box.nb_champs,1, "Should fail : box n'est pas dans un champs de gravité i.e. nb_champs=0")
+	assert_eq(box.nb_champs,0, "Should succeed : box n'est pas dans un champs de gravité i.e. nb_champs=0")
 	box._on_PhysicalHitbox_area_entered(gravity_field) #On teste avec un champ
 	assert_eq(box.nb_champs,1, "Should succeed : box est dans un champs de gravité i.e. nb_champs=1")
 

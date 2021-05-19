@@ -3,12 +3,14 @@ extends "res://addons/gut/test.gd"
 #Rien ne peut être testé à cause de l'animationplayer
 """
 var button = preload("res://Source/Entities/Script/DoorButton.gd").new() #On load le script de DoorButton comme nouvelle instance que l'on va tester
+var button_object = preload("res://Source/Entities/Scene/DoorButton.gd").instance() #On load une instance pour faire des tests
 var box = preload("res://Source/Entities/Script/Box.gd").new() #On load le script de Box
 var explosiveBox = preload("res://Source/Entities/Script/ExplosiveBox.gd").new() #On load le script de ExplosiveBox
 var actor = preload("res://Source/Actors/Script/Actor.gd").new()
 var enemy = preload("res://Source/Actors/Script/Enemy.gd").new() #On load le script de Enemy
 var player = preload("res://Source/Actors/Script/Player.gd").new() #On load le script de Player
 var timeClone = preload("res://Source/Actors/Script/TimeClone.gd").new() #On load le script de TimeClone
+
 
 #On teste si DoorButton détecte bien tous les corps susceptibles d'appuyer sur le bouton ou non :
 func test_on_body_entered():
