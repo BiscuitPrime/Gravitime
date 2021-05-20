@@ -17,7 +17,7 @@ var timecontrol_active = false #cette variable indique si le joueur est e train 
 var timeposition #variable qui contiendra la position du joueur lorsqu'il remontera le temps
 onready var _animation_player = $AnimationPlayer #pour l'animation du joueur 
 onready var sprite = $player #pour changer rapidement le sens du sprite
-
+var is_on_pause=false
 
 #Cette fonction est appelée lors de l'instanciation du joueur
 func _ready():

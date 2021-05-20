@@ -9,6 +9,7 @@ export(String, FILE) var next_scene_path := ""
 func _on_ChangeSceneButton_button_up() -> void:
 	GeneralData.reset()
 	get_tree().change_scene(next_scene_path)
+	get_tree().paused=false
 
 #Simple avertissement au cas où le chemin est vide
 func _get_configuration_warning() -> String:

@@ -1,17 +1,11 @@
 extends Control
 #Ce script s'occupe de mettre le jeu en pause et afficher le menu
 
-onready var scene_tree: = get_tree()
-onready var pause_overlay: ColorRect = get_node("PauseOverlay")
+func _read():
+	visible=false
 
-var paused := false setget set_paused
-
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		self.paused = not paused
-		scene_tree.set_input_as_handled()
-
-func set_paused(value: bool) -> void:
-	paused = value
-	scene_tree.paused = value
-	pause_overlay.visible = true
+		var new_pause_state=not get_tree().paused
+		get_tree().paused=new_pause_state
+		visible=new_pause_state

@@ -93,6 +93,7 @@ tracks/0/keys = {
 }
 
 [node name="TimeClone" type="KinematicBody2D"]
+pause_mode = 1
 collision_mask = 30
 script = ExtResource( 2 )
 Melee = ExtResource( 3 )

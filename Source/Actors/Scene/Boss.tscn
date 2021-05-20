@@ -18,6 +18,7 @@ _data = {
 }
 
 [node name="Boss" type="KinematicBody2D"]
+pause_mode = 1
 scale = Vector2( 2, 2 )
 collision_layer = 2
 collision_mask = 5
