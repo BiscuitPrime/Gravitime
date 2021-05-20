@@ -9,7 +9,7 @@ var boss = preload("res://Source/Actors/Script/Boss.gd").new()#On load le script
 func test_on_PhysicalHitbox_area_entered():
 	explosiveBox.nb_champs=0
 	explosiveBox._on_PhysicalHitbox_area_entered(null) #On teste d'abord avec aucun champ
-	assert_eq(explosiveBox.nb_champs, 1, "Should fail : explosiveBox n'est pas dans un champs de gravité i.e. nb_champs=0")
+	assert_eq(explosiveBox.nb_champs, 0, "Should succeed : explosiveBox n'est pas dans un champs de gravité i.e. nb_champs=0")
 	explosiveBox._on_PhysicalHitbox_area_entered(gravity_field) #On teste avec un champ
 	assert_eq(explosiveBox.nb_champs, 1, "Should succeed : explosiveBox est dans un champs de gravité i.e. nb_champs=1")
 
