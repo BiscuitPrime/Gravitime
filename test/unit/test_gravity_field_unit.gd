@@ -8,10 +8,7 @@ var fleches = field_object.get_node("Sprite").get_children()
 func test_ready():
 	field._ready()
 	assert_eq(field.gravity_field, Vector2(0,1)*field.norm_default, "Should succeed : le vecteur champs de gravité initial doit bien être orienté vers le bas de norme norm_default")
-	assert_eq(field.gravity_field, null, "Should fail : le vecteur ne doit pas être null à l'initialisation")
 	assert_eq(field.gravity_vec, (field.gravity_field/field.norm_default)*98, "Should succeed : le vecteur gravité pour les RigidBody2D doit être égal à l'expression par défault")
-	assert_eq(field.gravity_vec, null, "Should fail : le vecteur ne doit pas être null")
-	assert_eq(field.gravity_vec, Vector2(0,0), "Should fail : le vecteur initial ne doit pas être (0,0)")
 
 func test_indique_sens_intensite():
 	var angle = 70
@@ -19,16 +16,15 @@ func test_indique_sens_intensite():
 	var i = 1
 	field_object.indique_sens_intensite(angle, intensite)
 	for fleche in fleches :
-		assert_eq(fleche.rotation, angle, "Should succeed : la flèche numéro " + str(i) + " doit avoir le même rotation que angle" )
+		assert_eq(fleche.rotation, float(angle), "Should succeed : la flèche numéro " + str(i) + " doit avoir le même rotation que angle" )
 		assert_eq(fleche.scale, Vector2(0.4 - 0.2*intensite,0.3*intensite), "Should succeed : la flèche numéro " + str(i) + " doit avoir le même scale que l'expression donnée par la fonction")
 		i += 1
 	
 func test_get_actual_gravity():
 	field.gravity_field = Vector2(400, 378)
 	var grav = field.get_actual_gravity()
-	assert_eq(grav, field.gravity_field, "Should suceed : la valeur renvoyé doit bien être identique à celle du vedcteur gravité actuel")
-	assert_eq(grav, null, "Should fail : le vecteur renvoyé ne doit pas être null")
-	assert_eq(grav, Vector2(20,679), "Should fail : le vecteur renvoyé ne doit pas avoir la valeur (20, 679)")
+	assert_eq(grav, Vector2(400, 378), "Should succeed : la valeur renvoyé doit bien être identique à celle du vedcteur gravité actuel")
+
 	
 func test_calculate_gravity():
 	field.norm_min = 100
@@ -53,4 +49,4 @@ func test_calculate_gravity():
 	end = Vector2(500,0)
 	field.sensibility = 2
 	resultat = field.calculate_gravity(origin, end)
-	assert_eq(resultat, Vector2(1000,0), "Should succed : le resultat doit bien avoir pris en compte le facteur de sensibilité à 2, on doit avoir (1000,0)")
+	assert_eq(resultat, Vector2(1000,0), "Should succeed : le resultat doit bien avoir pris en compte le facteur de sensibilité à 2, on doit avoir (1000,0)")
