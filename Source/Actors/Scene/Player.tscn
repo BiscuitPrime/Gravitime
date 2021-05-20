@@ -161,6 +161,10 @@ anims/saut = SubResource( 7 )
 "anims/stand by" = SubResource( 8 )
 
 [node name="HUD" parent="." instance=ExtResource( 8 )]
+margin_left = -182.0
+margin_top = -190.0
+margin_right = 1.0
+margin_bottom = -125.0
 
 [node name="Pause" parent="." instance=ExtResource( 7 )]
 margin_left = -335.621
