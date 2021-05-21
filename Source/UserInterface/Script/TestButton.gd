@@ -7,8 +7,7 @@ export(String, FILE) var next_scene_path := ""
 
 #Quand on relâche le bouton, la scène suivante est chargée
 func _on_ChangeSceneButton_button_up() -> void:
-	GeneralData.reset()
-	GeneralData.music()
+	GeneralData.main_music.stop()
 	get_tree().change_scene(next_scene_path)
 	get_tree().paused=false
 

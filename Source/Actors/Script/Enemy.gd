@@ -9,6 +9,8 @@ onready var DetectorPlatRight = $DetectorPlatformRight #Détecte ce qui est sous
 onready var DetectorPlatLeft = $DetectorPlatformLeft #Détecte ce qui est sous lui (plateformes)
 onready var _animation_player = $AnimationPlayer
 onready var sprite = $enemy
+onready var death_sfx = $Death
+
 var timeposition #variable qui va contenir la position de l'ennemi avant la manipulation temporelle
 
 #Cette fonction est appelée lorsque l'instance de l'ennemi est loadée
@@ -41,6 +43,11 @@ func calculate_new_velocity(_velocity):
 
 #Cette fonction est appelée lorsque l'ennemi est touché par l'attaque du joueur
 func hit(dmg):
+	death_sfx.play()
+	set_collision_mask_bit(0,false)
+	set_collision_layer_bit(1,false)
+	hide()
+	yield(death_sfx, "finished")
 	queue_free() #Pour le moment, l'ennemi sera détruit - plus tard, on mettra un système de vie
 
 #Fonction appelée par TimeControl qui permet de sauvegarder la position du joueur :

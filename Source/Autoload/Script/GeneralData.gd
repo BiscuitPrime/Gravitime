@@ -3,6 +3,7 @@ extends Node
 #Ce script permet de conserver la vie du joueur
 
 var player_hp := 10 setget set_player_hp, get_player_hp #Cette variable globale est la vie du joueur
+onready var main_music =$MainMusic
 
 #Cette fonction est appelée lors du reset du jeu (par le bouton retry ou autres méthodes)
 #Elle remet à l'état initial la vie du joueur
@@ -18,3 +19,7 @@ func set_player_hp(value: int):
 #Elle est appelée par d'autres scripts du programme
 func get_player_hp():
 	return player_hp
+
+#Cette fonction gère la musique :
+func music():
+	main_music.play()

@@ -17,6 +17,8 @@ var timecontrol_active = false #cette variable indique si le joueur est e train 
 var timeposition #variable qui contiendra la position du joueur lorsqu'il remontera le temps
 onready var _animation_player = $AnimationPlayer #pour l'animation du joueur 
 onready var sprite = $player #pour changer rapidement le sens du sprite
+onready var attackSFX= $AttackSFX #le bruit d'attaque du joueur
+onready var deathSFX= $DeathSFX #le bruit de mort du joueur
 var is_on_pause=false
 
 #Cette fonction est appelée lors de l'instanciation du joueur
@@ -104,6 +106,7 @@ func hit(dmg):
 		_animation_player.stop(true)
 		_animation_player.play("hit")
 		GeneralData.player_hp=life-dmg
+		deathSFX.play()
 	else :
 		die()
 	position=spawn_position
@@ -140,6 +143,7 @@ func attack():
 		melee.position=get_global_position()+Vector2(100,-30)
 	else:
 		melee.position=get_global_position()+Vector2(-100,-30)
+	attackSFX.play()
 	$ReloadTimer.start()
 	yield($ReloadTimer, "timeout")
 	is_attacking=false

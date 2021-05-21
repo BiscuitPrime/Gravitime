@@ -3,11 +3,12 @@ extends "res://addons/gut/test.gd"
 
 var enemy = preload("res://Source/Actors/Script/Enemy.gd").new() #On load le boss
 var enemy_scene = preload("res://Source/Actors/Scene/Enemy.tscn").instance()
-var detector_right = enemy_scene.get_node("DetectorRight")
+var detector_right = enemy_scene.get_node("DetectorRight") #On load les diverses nodes utilisées par Enemy
 var detector_left = enemy_scene.get_node("DetectorLeft")
 var detector_platright = enemy_scene.get_node("DetectorPlatformRight")
 var detector_platleft = enemy_scene.get_node("DetectorPlatformLeft")
 var sprite_ = enemy_scene.get_node("enemy")
+var music = enemy_scene.get_node("Death")
 
 #On teste si l'ennemi sauvegarde sa position :
 func test_save():

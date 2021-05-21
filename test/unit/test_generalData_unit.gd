@@ -9,6 +9,7 @@ func test_reset():
 	generalData.reset()
 	assert_eq(generalData.player_hp,10,"Should succeed : le reset remet GeneralData.player_hp à 10")
 
+
 #On teste la fonction set_player_hp() de GeneralData :
 func test_set_player_hp():
 	generalData.reset() #On remet la vie du joueur à 0
