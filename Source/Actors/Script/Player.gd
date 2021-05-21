@@ -158,7 +158,6 @@ func save():
 func timeReset():
 	position=timeposition
 	timecontrol_active=false #On indique que on ne controle plus le temps (on peut recommencer à le modifier)
-	print(TimeControl.get_player_inputs())
 	var clone = Clone.instance()
 	get_parent().add_child(clone)
 	clone.position=get_global_position()

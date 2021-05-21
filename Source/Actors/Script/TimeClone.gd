@@ -26,7 +26,6 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	input = inputs[i] #nous lisons un à un les éléments de la liste inputs (une lectudqre par frame)
 	clone_action(input) #on appelle la fonction qui va diriger toutes les actions du clone
-	print(input)
 	var is_jump_interrupted:bool = input=="jump" and _velocity.y < 0.0 #On détermine si le clone voit son saut s'interrompre ou non
 	var direction :Vector2 = get_direction() #On détermine la direction du clone
 	movements_animation(direction)
